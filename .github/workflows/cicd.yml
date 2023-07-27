@@ -32,14 +32,7 @@ jobs:
       uses: jsdaniell/create-json@1.1.2
       with:
         name: "secrets.json"
-        json: ${{ secrets.SECERT_JSON }}
-          
-    - name: create secrets file
-      run: |
-        touch secrets.json
-        echo "Secrets : ${{ secrets.SECRET_JSON }}"
-        echo "${{ secrets.SECRET_JSON }}" >> secrets.json
-        
+        json: ${{ secrets.SECERT_JSON }}     
         
     - name: Run Tests
       run: |
