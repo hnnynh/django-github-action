@@ -178,3 +178,5 @@ venv
 .venv
 venv/
 venv.bak/
+
+.env.prod
