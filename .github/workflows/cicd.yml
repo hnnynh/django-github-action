@@ -27,6 +27,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
   
+    - name: create-json
+      id: create-json
+      uses: jsdaniell/create-json@1.1.2
+      with:
+        name: "secrets.json"
+        json: ${{ secrets.SECERT_JSON }}
+          
     - name: create secrets file
       run: |
         touch secrets.json
