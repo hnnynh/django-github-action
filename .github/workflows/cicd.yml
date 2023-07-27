@@ -29,9 +29,10 @@ jobs:
   
     - name: create secrets file
       run: |
-          echo $SECRET_JSON >> secrets.json
-      env:
-          CREDENTIALS: ${{ secrets.SECRET_JSON }}
+        touch secrets.json
+        echo "Secrets : ${{ secrets.SECRET_JSON }}"
+        echo "${{ secrets.SECRET_JSON }}" >> secrets.json
+        
         
     - name: Run Tests
       run: |
