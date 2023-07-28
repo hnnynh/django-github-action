@@ -1,4 +1,4 @@
-name: Django CI
+name: Django EC2 Deploy
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-
+  ci:
+    name: 'Django CI'
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -37,3 +37,27 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test
+  
+  cd:
+    name: 'Django CD'
+    needs: ci
+    runs-on: ubuntu-latest
+    steps:
+    - name: EC2 ssh connection test
+      uses: appleboy/ssh-action@master
+      env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          sudo apt-get update
+          sudo apt-get upgrade    
+          sudo apt-get install git
+          sudo apt-get install python3-pip
+          sudo apt-get install python3.10-venv
+          cd /home/ubuntu
+          touch secrets.json
+          echo "test success"
