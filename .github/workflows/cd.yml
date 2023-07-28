@@ -1,4 +1,4 @@
-name: Workflow Test2
+name: Django CD
 
 on:
   workflow_run:
@@ -7,7 +7,21 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: 테스트
-        run: echo "test"
+    - name: EC2 ssh connection
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          sudo apt-get update
+          sudo apt-get upgrade    
+          sudo apt-get install git
+          sudo apt-get install python3-pip
+          sudo apt-get install python3.10-venv
+          cd /home/ubuntu
+          touch secrets.json
+          echo "${{ secrets.SECRET_JSON }}" >> secrets.json	
+          echo "test success"
