@@ -1,0 +1,13 @@
+name: Workflow Test2
+
+on:
+  workflow_run:
+    workflows: [ Django CI ]
+    
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 테스트
+        run: echo "test"
