@@ -17,25 +17,17 @@ import json
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-secret_file = os.path.join(BASE_DIR, 'secrets.json') # secrets.json 파일 위치를 명시
+from dotenv import load_dotenv
 
-with open(secret_file, newline='\n') as f:
-    secrets = json.loads(f.read())
+load_dotenv()
+SECRET_KEY = os.getenv("SECRET_KEY")
 
-def get_secret(setting, secrets=secrets):
-    try:
-        return secrets[setting]
-    except KeyError:
-        error_msg = "Set the {} environment variable".format(setting)
-        raise ImproperlyConfigured(error_msg)
-
-SECRET_KEY = get_secret("SECRET_KEY")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_secret("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -111,11 +103,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.mysql',
-		'NAME': 'likelion11th',     # RDS DB 이름
-		'USER': get_secret("DB_USER"),
-		'PASSWORD': get_secret("DB_PASSWORD"),
-		'HOST': get_secret("DB_HOST"),
-		'PORT': '3306',     # mysql - 3306 포트
+		'NAME': os.getenv("DATABASE_NAME"),     # RDS DB 이름
+		'USER': os.getenv("DATABASE_USER"),
+		'PASSWORD': os.getenv("DATABASE_PASSWORD"),
+		'HOST': os.getenv("DATABASE_HOST"),
+		'PORT': os.getenv("DATABASE_PORT"),     # mysql - 3306 포트
 	}
 }
 
@@ -162,12 +154,12 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # AWS 권한 설정
-AWS_ACCESS_KEY_ID = get_secret('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = get_secret('AWS_SECRET_ACCESS_KEY')
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_REGION = 'ap-northeast-2'
 
 # AWS S3 버킷 이름
-AWS_STORAGE_BUCKET_NAME = get_secret('AWS_S3_BUCKET')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_S3_BUCKET')
 
 # AWS S3 버킷의 URL
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME,AWS_REGION)
