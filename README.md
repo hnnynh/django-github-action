@@ -11,5 +11,11 @@
 2. Job-Chaining
    - 결국 Build ➡ Deploy 이므로 연속적으로 실행되도록 수정
 
-  
-   
+3. python 3.10
+   - ubuntu에서는 3.8까지 기본 지원
+   - https://www.itsupportwale.com/blog/how-to-upgrade-to-python-3-10-on-ubuntu-18-04-and-20-04-lts/
+
+4. EC2 ```pip install mysqlclient```
+   - ```sudo apt-get install python3-dev default-libmysqlclient-dev build-essential```
+   - ```sudo apt install pkg-config```
+   - ```sudo apt-get install python3.10-dev```
