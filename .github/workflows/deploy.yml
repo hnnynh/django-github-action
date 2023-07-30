@@ -43,20 +43,17 @@ jobs:
     steps:
     - name: EC2 ssh connection test
       uses: appleboy/ssh-action@master
-      env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
       with:
-        host: ${{ secrets.HOST }}
+        host: ${{ secrets.UNO_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
-        key: ${{ secrets.KEY }}
+        key: ${{ secrets.UNO_PEM }}
         port: ${{ secrets.SSH_PORT }}
         script: |
           sudo apt-get update
           sudo apt-get upgrade    
-          sudo apt-get install git
-          sudo apt-get install python3-pip
-          sudo apt-get install python3.10-venv
-          cd /home/ubuntu
-          touch .env
-          echo "${{ secrets.ENV }}" >> .env  
+          cd /home/ubuntu/django-github-action
+          source venv/bin/activate
+          git pull
+          pip install -r requirements.txt
+          python manage.py runserver 0.0.0.0:8000
           echo "test success"
