@@ -44,12 +44,12 @@ jobs:
     - name: EC2 ssh connection test
       uses: appleboy/ssh-action@master
       env:
-        PORT: 8000
+        PORT: 22
       with:
         host: ${{ secrets.UNO_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.UNO_PEM }}
-        port: ${{ secrets.SSH_PORT }}
+        port: $PORT
         script: |
           sudo apt-get update
           sudo apt-get -y upgrade
