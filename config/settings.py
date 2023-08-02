@@ -11,19 +11,25 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-import os
-import json
+import os, json
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+secret_file = os.path.join(BASE_DIR, 'secrets.json') # secrets.json 파일 위치를 명시
 
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+def get_secret(setting, secrets=secrets):
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = get_secret("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -99,11 +105,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.mysql',
-		'NAME': os.environ.get("DATABASE_NAME"),     # RDS DB 이름
-		'USER': os.environ.get("DATABASE_USER"),
-		'PASSWORD': os.environ.get("DATABASE_PASSWORD"),
-		'HOST': os.environ.get("DATABASE_HOST"),
-		'PORT': os.environ.get("DATABASE_PORT"),     # mysql - 3306 포트
+		'NAME': get_secret("DATABASE_NAME"),     # RDS DB 이름
+		'USER': get_secret("DATABASE_USER"),
+		'PASSWORD': get_secret("DATABASE_PASSWORD"),
+		'HOST': get_secret("DATABASE_HOST"),
+		'PORT': get_secret("DATABASE_PORT"),     # mysql - 3306 포트
 	}
 }
 
@@ -150,12 +156,12 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # AWS 권한 설정
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_ACCESS_KEY_ID = get_secret('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = get_secret('AWS_SECRET_ACCESS_KEY')
 AWS_REGION = 'ap-northeast-2'
 
 # AWS S3 버킷 이름
-AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_S3_BUCKET')
+AWS_STORAGE_BUCKET_NAME = get_secret('AWS_S3_BUCKET')
 
 # AWS S3 버킷의 URL
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME,AWS_REGION)

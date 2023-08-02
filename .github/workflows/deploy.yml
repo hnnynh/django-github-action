@@ -47,6 +47,7 @@ jobs:
         host: ${{ secrets.UNO_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.UNO_PEM }}
+        command_timeout: 5m
         script: |
           sudo apt-get update
           sudo apt-get -y upgrade
@@ -56,5 +57,4 @@ jobs:
           sudo lsof -t -i tcp:8000 | xargs kill -9
           pip install -r requirements.txt
           python manage.py migrate
-          nohup python manage.py runserver 0.0.0.0:8000 &
-          # python manage.py runserver 0.0.0.0:8000
+          gunicorn config.wsgi:application —bind 127.0.0.1:8000
