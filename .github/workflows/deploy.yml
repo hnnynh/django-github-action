@@ -56,5 +56,8 @@ jobs:
           git pull
           pip install -r requirements.txt
           python manage.py migrate
+          sudo lsof -t -i tcp:8000 | xargs kill -9
+          nohup python manage.py runserver 0.0.0.0:8000 &
           # python manage.py runserver 0.0.0.0:8000
+          exit
           echo "test success"
