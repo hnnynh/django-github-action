@@ -21,4 +21,4 @@
    - ```sudo apt-get install python3.10-dev```
 
 5. python 버전 바꾸기
-   - ```sudo update-alternatives --config python3```로 python-3.10으로 바꿔주기
+   - ```sudo update-alternatives --config python3```로 python-3.10으로 바꾸기
