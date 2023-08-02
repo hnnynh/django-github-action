@@ -47,7 +47,6 @@ jobs:
         host: ${{ secrets.UNO_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.UNO_PEM }}
-        port: 22
         script: |
           sudo apt-get update
           sudo apt-get -y upgrade
