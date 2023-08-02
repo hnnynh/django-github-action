@@ -17,17 +17,13 @@ import json
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-from dotenv import load_dotenv
-
-load_dotenv()
-SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -103,11 +99,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.mysql',
-		'NAME': os.getenv("DATABASE_NAME"),     # RDS DB 이름
-		'USER': os.getenv("DATABASE_USER"),
-		'PASSWORD': os.getenv("DATABASE_PASSWORD"),
-		'HOST': os.getenv("DATABASE_HOST"),
-		'PORT': os.getenv("DATABASE_PORT"),     # mysql - 3306 포트
+		'NAME': os.environ.get("DATABASE_NAME"),     # RDS DB 이름
+		'USER': os.environ.get("DATABASE_USER"),
+		'PASSWORD': os.environ.get("DATABASE_PASSWORD"),
+		'HOST': os.environ.get("DATABASE_HOST"),
+		'PORT': os.environ.get("DATABASE_PORT"),     # mysql - 3306 포트
 	}
 }
 
@@ -154,12 +150,12 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # AWS 권한 설정
-AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_REGION = 'ap-northeast-2'
 
 # AWS S3 버킷 이름
-AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_S3_BUCKET')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_S3_BUCKET')
 
 # AWS S3 버킷의 URL
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME,AWS_REGION)
