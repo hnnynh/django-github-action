@@ -22,3 +22,7 @@
 
 5. python 버전 바꾸기
    - ```sudo update-alternatives --config python3```로 python-3.10으로 바꾸기
+   - 기본으로 3.8 venv를 쓰자..
+
+6. AttributeError: module 'dotenv' has no attribute 'read_dotenv'
+   - ```pip uninstall django-dotenv``` ```pip uninstall python-dotenv``` -> ```pip install django-dotenv```
