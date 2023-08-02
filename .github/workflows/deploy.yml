@@ -48,6 +48,7 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         key: ${{ secrets.UNO_PEM }}
         port: ${{ secrets.SSH_PORT }}
+        command_timeout: 200m
         script: |
           sudo apt-get update
           sudo apt-get -y upgrade
@@ -59,4 +60,3 @@ jobs:
           python manage.py migrate
           nohup python manage.py runserver 0.0.0.0:8000 &
           # python manage.py runserver 0.0.0.0:8000
-          ^C
