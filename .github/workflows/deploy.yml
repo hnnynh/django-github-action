@@ -52,8 +52,6 @@ jobs:
           sudo apt-get update
           sudo apt-get upgrade    
           cd /home/ubuntu/django-github-action
-          touch .env
-          echo "${{ secrets.ENV }}" >> .env  
           source venv/bin/activate
           git pull
           pip install -r requirements.txt
