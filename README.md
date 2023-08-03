@@ -26,3 +26,4 @@
 
 6. AttributeError: module 'dotenv' has no attribute 'read_dotenv'
    - ```pip uninstall django-dotenv``` ```pip uninstall python-dotenv``` -> ```pip install django-dotenv```
+   - 그냥 EC2에 secrets.json 저장하고 수동 업데이트 할 예정..
