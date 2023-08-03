@@ -59,6 +59,5 @@ jobs:
           sudo lsof -t -i tcp:8000 | xargs kill -9
           pip install -r requirements.txt
           python manage.py migrate
-          chmod ubuntu ./nohup.out
           nohup gunicorn --bind 0.0.0.0:8000 config.wsgi > nohup.out 2> nohup.err < /dev/null &
           exit 0

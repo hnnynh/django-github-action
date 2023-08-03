@@ -26,3 +26,10 @@
 
 6. AttributeError: module 'dotenv' has no attribute 'read_dotenv'
    - ```pip uninstall django-dotenv``` ```pip uninstall python-dotenv``` -> ```pip install django-dotenv```
+
+7. nohup timeout
+   - https://github.com/appleboy/ssh-action/issues/40
+
+8. nohup.out Permission denied
+   - https://structuring.tistory.com/200
+   - root에서 ```chmod 777 nohup.out```하고 ubuntu로 돌아오기
